@@ -10,7 +10,7 @@
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:kNR6DmZow/5PuC3Mrj5xpuodOZYLxVCIkavCDmdMwoo=',
+    'key' => 'base64:DxTduRqtIzqFz6nzhB0UtUrXW1CGr4JdLIpUrF1+3+Q=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -184,7 +184,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'D:\\laragon\\www\\HRMS\\storage\\framework/cache/data',
+        'path' => 'C:\\Users\\kira\\Desktop\\New folder (3)\\HRMS\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -267,7 +267,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'HRMS',
+        'database' => 'hrms',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -277,9 +277,9 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'HRMS',
+        'database' => 'hrms',
         'username' => 'root',
-        'password' => '12345',
+        'password' => '',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
@@ -297,9 +297,9 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'HRMS',
+        'database' => 'hrms',
         'username' => 'root',
-        'password' => '12345',
+        'password' => '',
         'charset' => 'utf8',
         'prefix' => '',
         'prefix_indexes' => true,
@@ -312,9 +312,9 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'HRMS',
+        'database' => 'hrms',
         'username' => 'root',
-        'password' => '12345',
+        'password' => '',
         'charset' => 'utf8',
         'prefix' => '',
         'prefix_indexes' => true,
@@ -355,12 +355,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\laragon\\www\\HRMS\\storage\\app',
+        'root' => 'C:\\Users\\kira\\Desktop\\New folder (3)\\HRMS\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\laragon\\www\\HRMS\\storage\\app/public',
+        'root' => 'C:\\Users\\kira\\Desktop\\New folder (3)\\HRMS\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -378,7 +378,7 @@
     ),
     'links' => 
     array (
-      'D:\\laragon\\www\\HRMS\\public\\storage' => 'D:\\laragon\\www\\HRMS\\storage\\app/public',
+      'C:\\Users\\kira\\Desktop\\New folder (3)\\HRMS\\public\\storage' => 'C:\\Users\\kira\\Desktop\\New folder (3)\\HRMS\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -413,13 +413,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'D:\\laragon\\www\\HRMS\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\kira\\Desktop\\New folder (3)\\HRMS\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'D:\\laragon\\www\\HRMS\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\kira\\Desktop\\New folder (3)\\HRMS\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -470,7 +470,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'D:\\laragon\\www\\HRMS\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\kira\\Desktop\\New folder (3)\\HRMS\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -482,11 +482,11 @@
       'smtp' => 
       array (
         'transport' => 'smtp',
-        'host' => 'smtp.gmail.com',
-        'port' => '465',
+        'host' => 'mailhog',
+        'port' => '1025',
         'encryption' => NULL,
-        'username' => 'devpublic14@gmail.com',
-        'password' => 'uoqagalclmbmpvjg',
+        'username' => NULL,
+        'password' => NULL,
         'timeout' => NULL,
         'auth_mode' => NULL,
       ),
@@ -528,7 +528,7 @@
     ),
     'from' => 
     array (
-      'address' => 'devpublic14@gmail.com',
+      'address' => 'hello@example.com',
       'name' => 'Laravel',
     ),
     'markdown' => 
@@ -536,7 +536,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'D:\\laragon\\www\\HRMS\\resources\\views/vendor/mail',
+        0 => 'C:\\Users\\kira\\Desktop\\New folder (3)\\HRMS\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -570,23 +570,9 @@
     'cache' => 
     array (
       'expiration_time' => 
-      DateInterval::__set_state(array(
-         'y' => 0,
-         'm' => 0,
-         'd' => 0,
-         'h' => 24,
-         'i' => 0,
-         's' => 0,
-         'f' => 0.0,
-         'weekday' => 0,
-         'weekday_behavior' => 0,
-         'first_last_day_of' => 0,
-         'invert' => 0,
-         'days' => false,
-         'special_type' => 0,
-         'special_amount' => 0,
-         'have_weekday_relative' => 0,
-         'have_special_relative' => 0,
+      \DateInterval::__set_state(array(
+         'from_string' => true,
+         'date_string' => '24 hours',
       )),
       'key' => 'spatie.permission.cache',
       'store' => 'default',
@@ -693,7 +679,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'D:\\laragon\\www\\HRMS\\storage\\framework/sessions',
+    'files' => 'C:\\Users\\kira\\Desktop\\New folder (3)\\HRMS\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -713,9 +699,9 @@
   array (
     'paths' => 
     array (
-      0 => 'D:\\laragon\\www\\HRMS\\resources\\views',
+      0 => 'C:\\Users\\kira\\Desktop\\New folder (3)\\HRMS\\resources\\views',
     ),
-    'compiled' => 'D:\\laragon\\www\\HRMS\\storage\\framework\\views',
+    'compiled' => 'C:\\Users\\kira\\Desktop\\New folder (3)\\HRMS\\storage\\framework\\views',
   ),
   'image' => 
   array (
@@ -794,7 +780,7 @@
     array (
     ),
     'enable_runnable_solutions' => NULL,
-    'remote_sites_path' => 'D:\\laragon\\www\\HRMS',
+    'remote_sites_path' => 'C:\\Users\\kira\\Desktop\\New folder (3)\\HRMS',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
     'settings_file_path' => '',

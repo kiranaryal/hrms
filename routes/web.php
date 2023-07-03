@@ -9,17 +9,17 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/test', [\App\Http\Controllers\TestController::class, 'index']);
+Route::redirect('/', '/login');
+
 
 require __DIR__ . '/auth.php';
 
-// redirect for home
-Route::get('/', function () {
-    return redirect('/login');
-});
 
 Route::middleware(['auth'])->group(function () {
     // dashboard
     Route::view('/dashboard', 'portal_pages.dashboard')->name('dashboard');
+
     // users
     Route::get('all-users', [\App\Http\Controllers\UsersController::class, 'all_users']);
     Route::any('add-employee-user', [\App\Http\Controllers\UsersController::class, 'adduserEmployee']);
@@ -51,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
     ]);
 
 });
+
 
 //Demo Routes
 

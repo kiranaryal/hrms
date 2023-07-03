@@ -20,7 +20,7 @@ class CreateEmployeesTable extends Migration
             $table->string('son_of');
             $table->string('persnol_email');
             $table->integer('age');
-            $table->integer('dob');
+            $table->string('dob');
             $table->string('gender');
             $table->string('city');
             $table->string('address');
@@ -31,6 +31,10 @@ class CreateEmployeesTable extends Migration
             $table->unsignedBigInteger('etype_id');
             $table->unsignedBigInteger('desg_id');
             $table->unsignedBigInteger('dep_id');
+            $table->text('user_id');
+            $table->text('salary');
+
+
             $table->timestamps();
 
         });

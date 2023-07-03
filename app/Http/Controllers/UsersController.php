@@ -50,10 +50,10 @@ class UsersController extends Controller
                 $user->password = bcrypt($data['password']);
                 $user->save();
                 // $user_id = $user->id;
-                if ($user) {
-                    Mail::to($data['email'])->send(new Welcome($user));
-                    echo"send";
-                }
+                // if ($user) {
+                //     Mail::to($data['email'])->send(new Welcome($user));
+                //     echo"send";
+                // }
 
                 return redirect('/add-employee');
             }

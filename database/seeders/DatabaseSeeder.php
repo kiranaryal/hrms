@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Designation;
 use Illuminate\Database\Seeder;
 
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -16,5 +17,7 @@ class DatabaseSeeder extends Seeder
     {
       // $this->call([Departments::class]);
       $this->call([DesignationSeeder::class]);
+      $this->call([UserSeeder::class]);
+
     }
 }
