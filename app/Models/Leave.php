@@ -12,7 +12,7 @@ class Leave extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'emp_id',
+        'user_id',
         'leave_type',
         'days',
         'start_date',
@@ -23,7 +23,7 @@ class Leave extends Model
  // relation with User
  public function userinfo()
  {
-     return $this->hasOne(User::class,'id','emp_id');
+     return $this->hasOne(User::class,'id','user_id');
  }
 
 

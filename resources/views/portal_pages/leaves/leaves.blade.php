@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      {{-- <div class="row">
         <div class="col-md-3">
           <div class="stats-info">
             <h6>Today Presents</h6>
@@ -42,8 +42,8 @@
             <h4>12</h4>
           </div>
         </div>
-      </div>
-      <div class="row filter-row">
+      </div> --}}
+      {{-- <div class="row filter-row">
         <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
           <div class="form-group form-focus">
             <input type="text" class="form-control floating">
@@ -91,7 +91,7 @@
         <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
           <a href="#" class="btn btn-success btn-block"> Search </a>
         </div>
-      </div>
+      </div> --}}
       <div class="row">
         <div class="col-md-12">
           <div class="table-responsive">
@@ -103,9 +103,6 @@
                   <th>From</th>
                   <th>To</th>
                   <th>Reason</th>
-                  <th>No of Days</th>
-                  <th>Remaining</th>
-                  <th>Total</th>
                   <th class="text-center">Status</th>
                   <th class="text-right">Actions</th>
                 </tr>
@@ -116,17 +113,13 @@
                     <td hidden class="id" name="id">{{ $all_lvs->id}}</td>
                   <td>
                     <h2 class="table-avatar">
-                      <a href="profile.html" class="avatar"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
-                      <a> {{ $all_lvs->userinfo->name }} </a>
+                      {{ $all_lvs->userinfo->name }}
                     </h2>
                   </td>
                   <td>{{ $all_lvs->leave_type}}</td>
                   <td class="start_date">{{ date('d F, Y', strtotime( $all_lvs->start_date))}}</td>
                   <td>{{ date('d F, Y', strtotime( $all_lvs->end_date))}}</td>
                   <td>{{$all_lvs->reason}}</td>
-                  <td>{{$all_lvs->days}}</td>
-                  <td>{{$all_lvs->remaining_leaves }}</td>
-                  <td>{{$all_lvs->total_leaves}}</td>
                   <td class="text-center">
                     <div class="dropdown action-label">
                       <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
@@ -141,13 +134,12 @@
                     </div>
                   </td>
                   <td class="text-right">
-                    <div class="dropdown dropdown-action">
-                      <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ $all_lvs->id}}" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                        <a class="dropdown-item" href="{{ $all_lvs->id }}" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                      </div>
-                    </div>
+                        <form method="POST" class="dropdown-item" action="{{ route('delete-leave')}}">
+                            @csrf
+                            <input type="hidden" name="id" value="{{$all_lvs->id}}">
+                            <button>delete</button>
+
+                        </form>
                   </td>
                 </tr>
                 @endforeach
@@ -171,12 +163,21 @@
           <div class="modal-body">
             <form method="POST" action="{{ url('add-leave')}}">
                 @csrf
-                <input type="hidden" name="user_id_as_emp_id" value="{{ Auth::user()->id }}">
+                <div class="form-group">
+                    <label>User <span class="text-danger">*</span></label>
+
+                        <select  class="select" name="user_id">
+                        @foreach ($users as $user)
+                        <option value="{{$user->id}}">{{$user->name}}</option>
+                        @endforeach
+                      </select>
+
+                  </div>
               <div class="form-group">
                 <label>Leave Type <span class="text-danger">*</span></label>
                 <select class="select" name="leave_type">
                   <option>Select Leave Type</option>
-                  <option>Casual Leave 12 Days</option>
+                  <option>Casual Leave </option>
                   <option>Medical Leave</option>
                   <option>Loss of Pay</option>
                 </select>
@@ -184,26 +185,27 @@
               <div class="form-group">
                 <label>From <span class="text-danger">*</span></label>
                 <div class="cal-icon">
-                  <input class="form-control" type="date" name="start_date">
+                  <input  type="date" name="start_date">
                 </div>
               </div>
               <div class="form-group">
                 <label>To <span class="text-danger">*</span></label>
                 <div class="cal-icon">
-                  <input class="form-control" type="date" name="end_date">
+                  <input  type="date" name="end_date">
                 </div>
               </div>
-              {{-- <div class="form-group">
-                <label>Number of days <span class="text-danger">*</span></label>
-                <input class="form-control" readonly type="text">
-              </div> --}}
-              {{-- <div class="form-group">
-                <label>Remaining Leaves <span class="text-danger">*</span></label>
-                <input class="form-control" readonly value="12" type="text">
-              </div> --}}
+
               <div class="form-group">
                 <label>Leave Reason <span class="text-danger">*</span></label>
                 <textarea rows="4" class="form-control" name="reason"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Status <span class="text-danger">*</span></label>
+                <select class="select" name="status">
+                  <option>Pending</option>
+                  <option>Approved</option>
+                  <option>Rejected</option>
+                </select>
               </div>
               <div class="submit-section">
                 <button class="btn btn-primary submit-btn">Submit</button>
@@ -214,106 +216,5 @@
       </div>
     </div>
 
-
-    <div id="edit_leave" class="modal custom-modal fade" role="dialog">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Edit Leave</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form action="{{ url('leave/edit')}}" method="POST">
-                @csrf
-                <input type="text" name="id" id="l_id" value="">
-              <div class="form-group">
-                <label>Leave Type <span class="text-danger">*</span></label>
-                <select class="select" id="leave_type" name="leave_type">
-                    <option>Select Leave Type</option>
-                    <option>Casual Leave 12 Days</option>
-                    <option>Medical Leave</option>
-                    <option>Loss of Pay</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>From <span class="text-danger">*</span></label>
-                <div class="cal-icon">
-                  <input class="form-control datetimepicker" value="" type="date" name="start_date" id="start_date">
-                </div>
-              </div>
-              <div class="form-group">
-                <label>To <span class="text-danger">*</span></label>
-                <div class="cal-icon">
-                  <input class="form-control datetimepicker" value="" type="date" name="end_date" id="end_date">
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Leave Reason <span class="text-danger">*</span></label>
-                <textarea rows="4" class="form-control" name="reason" id="reason"></textarea>
-              </div>
-              <div class="submit-section">
-                <button class="btn btn-primary submit-btn">Save</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal custom-modal fade" id="approve_leave" role="dialog">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-body">
-            <div class="form-header">
-              <h3>Leave Approve</h3>
-              <p>Are you sure want to approve for this leave?</p>
-            </div>
-            <div class="modal-btn delete-action">
-              <div class="row">
-                <div class="col-6">
-                  <a href="" class="btn btn-primary continue-btn">Approve</a>
-                </div>
-                <div class="col-6">
-                  <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Decline</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal custom-modal fade" id="delete_approve" role="dialog">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-body">
-            <div class="form-header">
-              <h3>Delete Leave</h3>
-              <p>Are you sure want to delete this leave?</p>
-            </div>
-            <div class="modal-btn delete-action">
-              <div class="row">
-                <div class="col-6">
-                  <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
-                </div>
-                <div class="col-6">
-                  <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-</div>
-{{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script>
-    $(document).on('click',  function(){
-        var __this = $(this).parents('tr');
-        $('#l_id').val(__this.find('.id'));
-        $('#start_date').val(__this.find('.start_date'));
-    });
-</script> --}}
 
 @endsection

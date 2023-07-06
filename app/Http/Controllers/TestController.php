@@ -6,11 +6,10 @@ use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
-    public function index()
+    public function generate($experience)
     {
-        // Sample data
-$X = [1, 2, 3, 4, 5]; // Experience
-$Y = [25000, 35000, 45000, 55000, 65000]; // Salary
+$X = [1, 2, 3, 4, 5,10,20,30,50,75,100]; // Experience
+$Y = [25000, 35000, 45000, 55000, 65000,85000,90000,100000,150000,200000,250000]; // Salary
 
 // Function to calculate the mean value of an array
 function mean($array) {
@@ -62,10 +61,10 @@ function linearRegression($X, $Y) {
 $regressionResult = linearRegression($X, $Y);
 
 // Predict the salary for a given experience
-$experience = 6;
+$experience = $experience;
 $predictedSalary = $regressionResult['slope'] * $experience + $regressionResult['intercept'];
 
-echo $predictedSalary . "\n"; // Output: 75000 (predicted salary for experience = 6)
+return response()->json((int)$predictedSalary);
 
     }
 

@@ -3,22 +3,24 @@
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\DashboardController;
+
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/test', [\App\Http\Controllers\TestController::class, 'index']);
+Route::get('/test/{experience}', [\App\Http\Controllers\TestController::class, 'generate']);
 Route::redirect('/', '/login');
 
 
 require __DIR__ . '/auth.php';
 
+Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'getAttendanceTime'])->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     // dashboard
-    Route::view('/dashboard', 'portal_pages.dashboard')->name('dashboard');
 
     // users
     Route::get('all-users', [\App\Http\Controllers\UsersController::class, 'all_users']);
@@ -39,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('add-leave', [\App\Http\Controllers\LeaveController::class, 'addLeave']);
     Route::any('approve-leave/{id}', [\App\Http\Controllers\LeaveController::class, 'approveLeave']);
     Route::any('reject-leave/{id}', [\App\Http\Controllers\LeaveController::class, 'rejectLeave']);
-    // Route::post('leave/edit',[\App\Http\Controllers\LeaveController::class, 'editLeave']);
+    Route::post('leave/delete',[\App\Http\Controllers\LeaveController::class, 'deleteLeave'])->name('delete-leave');
 
     // resources routes
     Route::resources([

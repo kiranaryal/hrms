@@ -124,7 +124,7 @@ class EmployeeController extends Controller
             $updateData->salary = $request->salary;
             $updateData->image = $imgName;
             $updateData->status = $request->status;
-            $updateData->etype_id = $request->empType;
+            $updateData->etype_id = $request->empType ?? 1;
             $updateData->desg_id = $request->designation;
             $updateData->dep_id = $request->department;
            // dd($updateData);

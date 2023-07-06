@@ -77,122 +77,53 @@ else{
                                     @endif
                                 </form>
                             </div>
-                            {{-- <div class="statistics">
-                                <div class="row">
-                                    <div class="col-md-6 col-6 text-center">
-                                        <div class="stats-box">
-                                            <p>Break</p>
-                                            <h6>1.21 hrs</h6>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-6 text-center">
-                                        <div class="stats-box">
-                                            <p>Overtime</p>
-                                            <h6>3 hrs</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
+
                         </div>
                     </div>
                 </div>
-                 <div class="col-md-4">
-                    <div class="card att-statistics">
+
+                <div class="col-md-4">
+                    <div class="card recent-activity">
                         <div class="card-body">
-                            <h5 class="card-title">Statistics</h5>
-                            <div class="stats-list">
-                                <div class="stats-info">
-                                    <p>Today <strong>3.45 <small>/ 8 hrs</small></strong></p>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 31%"
-                                            aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="stats-info">
-                                    <p>This Week <strong>28 <small>/ 40 hrs</small></strong></p>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 31%"
-                                            aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="stats-info">
-                                    <p>This Month <strong>90 <small>/ 160 hrs</small></strong></p>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 62%"
-                                            aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="stats-info">
-                                    <p>Remaining <strong>90 <small>/ 160 hrs</small></strong></p>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 62%"
-                                            aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="stats-info">
-                                    <p>Overtime <strong>4</strong></p>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 22%"
-                                            aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            <h5 class="card-title">Today Activity</h5>
+                            <ul class="res-activity-list">
+                                @foreach($attendance as $a)
+                                @if($a->checkin!=0)
+                                <li>
+                                    <p class="mb-0">Punch In at</p>
+                                    <p class="res-activity-time">
+                                        <i class="fa fa-clock-o"></i>
+                                        {{$a->checkin}}
+                                    </p>
+                                </li>
+                                @endif
+                                @if($a->checkout!=0)
+                                <li>
+                                    <p class="mb-0">Punch Out at</p>
+                                    <p class="res-activity-time">
+                                        <i class="fa fa-clock-o"></i>
+                                        {{$a->checkout}}
+                                    </p>
+                                </li>
+                                @endif
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card recent-activity">
                         <div class="card-body">
-                            <h5 class="card-title">Today Activity</h5>
-                            <ul class="res-activity-list">
-                                <li>
-                                    <p class="mb-0">Punch In at</p>
-                                    <p class="res-activity-time">
-                                        <i class="fa fa-clock-o"></i>
-                                        10.00 AM.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="mb-0">Punch Out at</p>
-                                    <p class="res-activity-time">
-                                        <i class="fa fa-clock-o"></i>
-                                        11.00 AM.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="mb-0">Punch In at</p>
-                                    <p class="res-activity-time">
-                                        <i class="fa fa-clock-o"></i>
-                                        11.15 AM.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="mb-0">Punch Out at</p>
-                                    <p class="res-activity-time">
-                                        <i class="fa fa-clock-o"></i>
-                                        1.30 PM.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="mb-0">Punch In at</p>
-                                    <p class="res-activity-time">
-                                        <i class="fa fa-clock-o"></i>
-                                        2.00 PM.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="mb-0">Punch Out at</p>
-                                    <p class="res-activity-time">
-                                        <i class="fa fa-clock-o"></i>
-                                        7.30 PM.
-                                    </p>
-                                </li>
-                            </ul>
+                            <h5 class="card-title">View Projected Salary</h5>
+                            <p class="mb-0">After years of experience</p>
+                            <input type="number" name="experience" id="experience">
+                         <div id="msg"></div>
+
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row filter-row">
+            {{-- <div class="row filter-row">
                 <div class="col-sm-3">
                     <div class="form-group form-focus">
                         <div class="cal-icon">
@@ -237,7 +168,8 @@ else{
                 <div class="col-sm-3">
                     <a href="#" class="btn btn-success btn-block"> Search </a>
                 </div>
-            </div>
+            </div> --}}
+            <h3>All Attendances</h3>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="table-responsive">
@@ -246,40 +178,76 @@ else{
                                 <tr>
                                     <th>#</th>
                                     <th>Date </th>
+                                    <th>Employee</th>
                                     <th>Punch In</th>
                                     <th>Punch Out</th>
-                                    <th>Production</th>
-                                    <th>Break</th>
-                                    <th>Overtime</th>
+
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($all_attendance as $i=>$a)
                                 <tr>
-                                    <td>1</td>
-                                    <td>19 Feb 2019</td>
-                                    <td>10 AM</td>
-                                    <td>7 PM</td>
-                                    <td>9 hrs</td>
-                                    <td>1 hrs</td>
-                                    <td>0</td>
+                                    <td>{{$i}}</td>
+                                    <td>{{date('Y-m-d',strToTime($a->date))}}</td>
+                                    <td>{{$a->user->name}}</td>
+                                    <td>{{date('H-i',strToTime($a->checkin))}}</td>
+
+                                    <td>{{date('H-i',strToTime($a->checkout))}}</td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>20 Feb 2019</td>
-                                    <td>10 AM</td>
-                                    <td>7 PM</td>
-                                    <td>9 hrs</td>
-                                    <td>1 hrs</td>
-                                    <td>0</td>
-                                </tr>
+                                @endforeach
+                                {{ $all_attendance->links() }}
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            <h3>All Leaves</h3>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped custom-table mb-0 datatable">
+                            <thead>
+                              <tr>
+                                <th>Employee</th>
+                                <th>Leave Type</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Reason</th>
+                                {{-- <th class="text-right">Actions</th> --}}
+                              </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($all_leaves as $all_lvs )
+                              <tr>
+                                  <td hidden class="id" name="id">{{ $all_lvs->id}}</td>
+                                <td>
+                                  <h2 class="table-avatar">
+                                    {{ $all_lvs->userinfo->name }}
+                                  </h2>
+                                </td>
+                                <td>{{ $all_lvs->leave_type}}</td>
+                                <td class="start_date">{{ date('d F, Y', strtotime( $all_lvs->start_date))}}</td>
+                                <td>{{ date('d F, Y', strtotime( $all_lvs->end_date))}}</td>
+                                <td>{{$all_lvs->reason}}</td>
+{{--
+                                <td class="text-right">
+                                      <form method="POST" class="dropdown-item" action="{{ route('delete-leave')}}">
+                                          @csrf
+                                          <input type="hidden" name="id" value="{{$all_lvs->id}}">
+                                          <button>delete</button>
+
+                                      </form>
+                                </td> --}}
+                              </tr>
+                              @endforeach
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
-                <div class="col-lg-8 col-md-8">
+                {{-- <div class="col-lg-8 col-md-8">
                     <section class="dash-section">
                         <h1 class="dash-sec-title">Today</h1>
                         <div class="dash-sec-content">
@@ -407,8 +375,8 @@ else{
                             </div>
                         </div>
                     </section>
-                </div>
-                <div class="col-lg-4 col-md-4">
+                </div> --}}
+                {{-- <div class="col-lg- col-md-4">
                     <div class="dash-sidebar">
                         <section>
                             <h5 class="dash-title">Projects</h5>
@@ -482,7 +450,7 @@ else{
                             </div>
                         </section>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -490,10 +458,24 @@ else{
 
 @endsection
 
-
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js">
+</script>
 
 <script>
-    setTimeout(function() {
-    $('.alert').fadeOut('fast');
-}, 5000)
+    $(document).ready(function () {
+    $('#experience').on('change',  function () {
+
+    let experience = $('#experience').val();
+
+
+      $.ajax({
+         type:'GET',
+         url:'/test/'+experience,
+         success:function(data) {
+            $('#msg').html("Salary="+data);
+         }
+      });
+    });
+});
 </script>
+
