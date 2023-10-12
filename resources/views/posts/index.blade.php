@@ -42,19 +42,19 @@
                     <h4 class="modal-title" id="postCrudModal"></h4>
                 </div>
                 <div class="modal-body">
-                    <form id="postForm" name="postForm" class="form-horizontal">
-                        <input type="hidden" name="post_id" id="post_id">
+                    <form method="POST" action="{{ route('posts.store')}}">
+                        @csrf
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">Title</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="title" name="title" value="" required="">
+                                <input type="text" class="form-control" id="title" name="title" >
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Body</label>
                             <div class="col-sm-12">
-                                <input class="form-control" id="body" name="body" value="" required="">
+                                <input class="form-control" id="body" name="description">
                             </div>
                         </div>
                         <div class="col-sm-offset-2 col-sm-10">

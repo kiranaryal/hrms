@@ -27,6 +27,7 @@ class Employee extends Model
         'gender',
         'city',
         'address',
+        'image',
         'persnol_number',
         'marital_status',
 

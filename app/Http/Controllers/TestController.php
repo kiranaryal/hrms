@@ -3,69 +3,89 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\employee_stat;
+
 
 class TestController extends Controller
 {
-    public function generate($experience)
+    public function generate($exp)
     {
-$X = [1, 2, 3, 4, 5,10,20,30,50,75,100]; // Experience
-$Y = [25000, 35000, 45000, 55000, 65000,85000,90000,100000,150000,200000,250000]; // Salary
 
-// Function to calculate the mean value of an array
-function mean($array) {
-    return array_sum($array) / count($array);
-}
+        $dataset = [
+            ['experience' => 1, 'role' => 1, 'ranking' => 1, 'salary' => 30000],
 
-// Function to perform linear regression
-function linearRegression($X, $Y) {
-    $n = count($X);
+            ['experience' => 2, 'role' => 1, 'ranking' => 1, 'salary' => 32500],
+            ['experience' => 3, 'role' => 1, 'ranking' => 1, 'salary' => 35000],
+            ['experience' => 4, 'role' => 1, 'ranking' => 1, 'salary' => 37500],
+            ['experience' => 5, 'role' => 1, 'ranking' => 1, 'salary' => 40000],
 
-    // Calculate the mean of X and Y
-    $meanX = mean($X);
-    $meanY = mean($Y);
+            ['experience' => 1, 'role' => 2, 'ranking' => 1, 'salary' => 40000],
+            ['experience' => 1, 'role' => 3, 'ranking' => 1, 'salary' => 45000],
+            ['experience' => 1, 'role' => 4, 'ranking' => 1, 'salary' => 50000],
+            ['experience' => 1, 'role' => 5, 'ranking' => 1, 'salary' => 55000],
 
-    // Calculate the slope and intercept of the regression line
+            ['experience' => 1, 'role' => 1, 'ranking' => 2, 'salary' => 30500],
+            ['experience' => 1, 'role' => 1, 'ranking' => 3, 'salary' => 31000],
+            ['experience' => 1, 'role' => 1, 'ranking' => 4, 'salary' => 31500],
+            ['experience' => 1, 'role' => 1, 'ranking' => 5, 'salary' => 42000],
+
+
+
+        ];
+
+
+        // Extract the relevant data for training the regression model
+        $experience = array_column($dataset, 'experience');
+        $role = array_column($dataset, 'role');
+        $ranking = array_column($dataset, 'ranking');
+        $salary = array_column($dataset, 'salary');
+
+// Function to perform multiple linear regression
+function multipleLinearRegression($experience, $role, $ranking, $salary) {
+    $n = count($experience);
+
+    // Calculate the means of each feature
+    $meanExperience = array_sum($experience) / $n;
+    $meanRole = array_sum($role) / $n;
+    $meanRanking = array_sum($ranking) / $n;
+    $meanSalary = array_sum($salary) / $n;
+
+    // Calculate the coefficients (slopes) of the regression equation
     $numerator = 0;
     $denominator = 0;
     for ($i = 0; $i < $n; $i++) {
-        $numerator += ($X[$i] - $meanX) * ($Y[$i] - $meanY);
-        $denominator += pow($X[$i] - $meanX, 2);
+        $numerator += ($experience[$i] - $meanExperience) * ($role[$i] - $meanRole) * ($ranking[$i] - $meanRanking) * ($salary[$i] - $meanSalary);
+        $denominator += pow($experience[$i] - $meanExperience, 2) * pow($role[$i] - $meanRole, 2) * pow($ranking[$i] - $meanRanking, 2);
     }
+
     $slope = $numerator / $denominator;
-    $intercept = $meanY - $slope * $meanX;
 
-    // Predict the values of Y for the given X
-    $predictedY = [];
-    for ($i = 0; $i < $n; $i++) {
-        $predictedY[] = $slope * $X[$i] + $intercept;
-    }
-
-    // Calculate the coefficient of determination (R-squared)
-    $totalSumOfSquares = 0;
-    $residualSumOfSquares = 0;
-    for ($i = 0; $i < $n; $i++) {
-        $totalSumOfSquares += pow($Y[$i] - $meanY, 2);
-        $residualSumOfSquares += pow($Y[$i] - $predictedY[$i], 2);
-    }
-    $rSquared = 1 - ($residualSumOfSquares / $totalSumOfSquares);
+    // Calculate the intercept of the regression equation
+    $intercept = $meanSalary - ($slope * $meanExperience * $meanRole * $meanRanking);
 
     return [
         'slope' => $slope,
         'intercept' => $intercept,
-        'predictedY' => $predictedY,
-        'rSquared' => $rSquared,
     ];
 }
 
-// Call the linearRegression function with the sample data
-$regressionResult = linearRegression($X, $Y);
+// Call the multipleLinearRegression function with the sample data
+$regressionResult = multipleLinearRegression($experience, $role, $ranking, $salary);
 
-// Predict the salary for a given experience
-$experience = $experience;
-$predictedSalary = $regressionResult['slope'] * $experience + $regressionResult['intercept'];
+// Predict the salary for a given set of experience, role, and ranking
+$experienceToPredict = $exp; // Replace with the desired values
+$get = employee_stat::where('user_id', auth()->user()->id)->first();
+
+$roleToPredict =$get->role ?? 1;       // Replace with the desired values
+$rankingToPredict =$get->ranking ?? 1;    // Replace with the desired values
+
+$predictedSalary = $regressionResult['intercept'] +
+                   $regressionResult['slope'] * $experienceToPredict * $roleToPredict * $rankingToPredict;
 
 return response()->json((int)$predictedSalary);
 
     }
+
+
 
 }

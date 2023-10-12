@@ -18,6 +18,8 @@ else{
 
 @section('title', 'Dashboard')
 
+
+
     {{-- employee html --}}
     <div class="page-wrapper">
         <div class="content container-fluid">
@@ -25,7 +27,12 @@ else{
                 <div class="col-md-12">
                     <div class="welcome-box">
                         <div class="welcome-img">
-                            <img alt="" src="{{ asset('assets/img/profiles/avatar-02.jpg') }}">
+                            @php
+                            $image = auth()->user()->empRelation ? auth()->user()->empRelation->image :null;
+
+                            @endphp
+<img alt="" src="{{$image? asset('uploads/employee_images/'.$image): asset('assets/img/profiles/avatar-02.jpg ')}}">
+
                         </div>
                         <div class="welcome-det">
                             <h3>Welcome, {{ Auth::user()->name }}</h3>
@@ -86,6 +93,7 @@ else{
                     <div class="card recent-activity">
                         <div class="card-body">
                             <h5 class="card-title">Today Activity</h5>
+
                             <ul class="res-activity-list">
                                 @foreach($attendance as $a)
                                 @if($a->checkin!=0)
@@ -115,6 +123,10 @@ else{
                     <div class="card recent-activity">
                         <div class="card-body">
                             <h5 class="card-title">View Projected Salary</h5>
+                            <div>Current Rating[1-5]: {{$empstats->ranking ?? null}}</div>
+                        <div>  Current Role[1-5]:{{$empstats->role ?? null}}</div>
+                        <div>Current Experience[Years]:{{$empstats->experience ?? null}}</div>
+                        <div>Current Salary:{{$empstats->salary ?? null}}</div>
                             <p class="mb-0">After years of experience</p>
                             <input type="number" name="experience" id="experience">
                          <div id="msg"></div>
@@ -169,6 +181,34 @@ else{
                     <a href="#" class="btn btn-success btn-block"> Search </a>
                 </div>
             </div> --}}
+            <h3>All Notices</h3>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped custom-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title </th>
+                                    <th>Description</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($all_posts as $i=>$a)
+                                <tr>
+                                    <td>{{$i}}</td>
+                                    <td>{{$a->title}}</td>
+                                    <td>{{$a->description}}</td>
+                                </tr>
+                                @endforeach
+                                {{ $all_posts->links() }}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <h3>All Attendances</h3>
             <div class="row">
                 <div class="col-lg-12">

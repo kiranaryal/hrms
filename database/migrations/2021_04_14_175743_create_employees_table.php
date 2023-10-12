@@ -15,24 +15,24 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('fname');
-            $table->string('lname');
-            $table->string('son_of');
-            $table->string('persnol_email');
-            $table->integer('age');
-            $table->string('dob');
-            $table->string('gender');
-            $table->string('city');
-            $table->string('address');
-            $table->integer('persnol_number');
-            $table->string('marital_status');
-            $table->string('image');
+            $table->string('fname')->nullable();
+            $table->string('lname')->nullable();
+            $table->string('son_of')->nullable();
+            $table->string('persnol_email')->nullable();
+            $table->integer('age')->nullable();
+            $table->string('dob')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('city')->nullable();
+            $table->string('address')->nullable();
+            $table->integer('persnol_number')->nullable();
+            $table->string('marital_status')->nullable();
+            $table->string('image')->nullable();
             $table->integer('status')->default(0);
-            $table->unsignedBigInteger('etype_id');
-            $table->unsignedBigInteger('desg_id');
-            $table->unsignedBigInteger('dep_id');
-            $table->text('user_id');
-            $table->text('salary');
+            $table->unsignedBigInteger('etype_id')->nullable();
+            $table->unsignedBigInteger('desg_id')->nullable();
+            $table->unsignedBigInteger('dep_id')->nullable();
+            $table->text('user_id')->nullable();
+            $table->text('salary')->nullable();
 
 
             $table->timestamps();

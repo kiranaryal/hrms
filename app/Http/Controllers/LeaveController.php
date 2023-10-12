@@ -15,6 +15,9 @@ class LeaveController extends Controller
     // all leaves
     public function index()
     {
+        if(auth()->user()->is_admin !=1){
+            return redirect()->back();
+        }
         $all_leaves = Leave::with('userinfo')->orderBy('id','DESC')->get();
         $users = User::all();
         return view('portal_pages.leaves.leaves', compact('all_leaves','users'));
@@ -36,23 +39,35 @@ class LeaveController extends Controller
             return redirect('/leaves')->with('success', 'Leave has been Submited');
         }
     }
+    public function apply_leave()
+    {
+        return view('portal_pages.leaves.apply_leave');
+
+    }
+
 
     //approve leave
     public function approveLeave($id, Request $request)
-    {
+    { if(auth()->user()->is_admin !=1){
+        return redirect()->back();
+    }
         Leave::where('id', $id)->update(['status' => 'Approved']);
         return redirect()->back()->with('success', 'Leave has been Approved');
     }
 
     //reject leave
     public function rejectLeave($id)
-    {
+    { if(auth()->user()->is_admin !=1){
+        return redirect()->back();
+    }
         Leave::where('id', $id)->update(['status' => 'Rejected']);
         return redirect()->back()->with('success', 'Leave has been Rejected');
     }
 
     public function deleteLeave(Request $request)
-    {
+    { if(auth()->user()->is_admin !=1){
+        return redirect()->back();
+    }
         Leave::where('id', $request->id)->delete();
         return redirect()->back()->with('success', 'Leave has been Deleted');
     }

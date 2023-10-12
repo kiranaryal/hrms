@@ -21,7 +21,10 @@
               <div class="profile-view">
                 <div class="profile-img-wrap">
                   <div class="profile-img">
+
+                    @if($getEmpProfDetails->image !=null)
                     <a href="#"><img alt="" src="{{asset('uploads/employee_images/'.$getEmpProfDetails->image)}}"></a>
+                    @endif
                   </div>
                 </div>
                 <div class="profile-basic">
@@ -29,10 +32,10 @@
                     <div class="col-md-5">
                       <div class="profile-info-left">
                         <h3 class="user-name m-t-0 mb-0">{{$getEmpProfDetails->fname}} {{$getEmpProfDetails->lname}}</h3>
-                        <h6 class="text-muted">{{ $getEmpProfDetails->department->dep_name}}</h6>
-                        <small class="text-muted">{{ $getEmpProfDetails->designation->des_title}}</small>
+                        <h6 class="text-muted">{{ $getEmpProfDetails->department->dep_name ?? null}}</h6>
+                        <small class="text-muted">{{ $getEmpProfDetails->designation->des_title ?? null}}</small>
                         <div class="staff-id">Employee ID : {{ $getEmpProfDetails->user_id}}</div>
-                        <div class="small doj text-muted">Date of Join : {{ $getEmpProfDetails->userinfo->created_at}}</div>
+                        <div class="small doj text-muted">Date of Join : {{ $getEmpProfDetails->userinfo->created_at ?? null}}</div>
                         <div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send Message</a></div>
                       </div>
                     </div>
@@ -82,7 +85,7 @@
           </div>
         </div>
       </div>
-      <div class="card tab-box">
+      {{-- <div class="card tab-box">
         <div class="row user-tabs">
           <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
             <ul class="nav nav-tabs nav-tabs-bottom">
@@ -764,6 +767,7 @@
                         <option>8%</option>
                         <option>9%</option>
                         <option>10%</option>
+                    </div> --}}
                       </select>
                     </div>
                   </div>
@@ -781,21 +785,20 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
-     {{--
-    <div id="profile_info" class="modal custom-modal fade" role="dialog">
+    {{--
+        <div id="profile_info" class="modal custom-modal fade" role="dialog">
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-content">
+              <div class="modal-header">
             <h5 class="modal-title">Profile Information</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <form>
-              <div class="row">
+              <form>
+                  <div class="row">
                 <div class="col-md-12">
                   <div class="profile-img-wrap edit-img">
                     <img class="inline-block" src="assets/img/profiles/avatar-02.jpg" alt="user">

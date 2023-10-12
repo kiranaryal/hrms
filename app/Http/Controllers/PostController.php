@@ -12,7 +12,9 @@ use Redirect;
 class PostController extends Controller
 {
     public function index()
-    {
+    {if(auth()->user()->is_admin !=1){
+        return redirect()->back();
+    }
         //
         $data['posts'] = Post::orderBy('id','desc')->paginate(8);
 
@@ -26,20 +28,17 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
-        $postID = $request->post_id;
-        $post   =   Post::updateOrCreate(
-            ['id' => $postID],
+    {if(auth()->user()->is_admin !=1){
+        return redirect()->back();
+    }
+        $post   = Post::Create(
             [
                 'title' => $request->title,
-                 'body' => $request->body
+                 'description' => $request->description
             ]
         );
 
-        //dd($post);
-
-        return response()->json($post);
+        return redirect()->back();
     }
 
 
@@ -51,7 +50,9 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    { if(auth()->user()->is_admin !=1){
+        return redirect()->back();
+    }
         //
         $where = array('id' => $id);
         $post  = Post::where($where)->first();
@@ -66,7 +67,9 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    { if(auth()->user()->is_admin !=1){
+        return redirect()->back();
+    }
         //
         $post = Post::where('id',$id)->delete();
 

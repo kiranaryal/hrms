@@ -128,12 +128,17 @@
 
 <li class="nav-item dropdown has-arrow main-drop">
 <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-<span class="user-img"><img src="{{asset('assets/img/profiles/avatar-21.jpg')}}" alt="">
+<span class="user-img">         @php
+    $image = auth()->user()->empRelation ? auth()->user()->empRelation->image :null;
+
+    @endphp
+<img alt="" src="{{$image? asset('uploads/employee_images/'.$image): asset('assets/img/profiles/avatar-02.jpg ')}}">
+
 <span class="status online"></span></span>
 <span> {{ Auth::user()->name }}</span>
 </a>
 <div class="dropdown-menu">
-<a class="dropdown-item" href="">My Profile</a>
+    <a class="dropdown-item" href="{{ route('employee_profile', auth()->user()->id) }}">My Profile</a>
 <a class="dropdown-item" href="settings.html">Settings</a>
 <form id="logout-form" action="{{ route('logout') }}" method="POST">
     @csrf
@@ -148,10 +153,10 @@
 <div class="dropdown mobile-user-menu">
 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
 <div class="dropdown-menu dropdown-menu-right">
-<a class="dropdown-item" href="profile.html">My Profile</a>
-<a class="dropdown-item" href="settings.html">Settings</a>
- <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-           @csrf
+    <a class="dropdown-item" href="settings.html">Settings</a>
+    <a class="dropdown-item" href="{{ route('employee_profile', auth()->user()->id) }}">My Profile</a>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
 </form>
 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">Logout</a>
 </div>

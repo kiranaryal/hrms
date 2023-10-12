@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Models\employee_stat;
+
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -15,6 +17,9 @@ class EmployeeController extends Controller
     //all employees method
     public function index()
     {
+        if(auth()->user()->is_admin !=1){
+            return redirect()->back();
+        }
         $all_employees = Employee::with('designation', 'department', 'userinfo', 'empType')->get();
         // dd($all_employees);
         return view('portal_pages.employees.employees-list', compact('all_employees'));
@@ -22,12 +27,14 @@ class EmployeeController extends Controller
 
     //  add employee method
     public function addEmployee(Request $request)
-    {
+    { if(auth()->user()->is_admin !=1){
+        return redirect()->back();
+    }
         if ($request->isMethod('post')) {
             $data = $request->all();
 
             //   image upload code
-            if ($request->hasFile('image')) {
+            if ($request->hasFile('image') && $request->image!= null) {
                 $files = $request->file('image');
 
                 foreach ($files as $file) {
@@ -40,6 +47,9 @@ class EmployeeController extends Controller
                     //intervention code for uploading photo
                     Image::make($file)->resize(250, 150)->save($img_path);
                 }
+            }
+            else{
+                $filename= null;
             }
 
             // save user id
@@ -65,18 +75,25 @@ class EmployeeController extends Controller
             $employee->desg_id = $data['designation'];
             $employee->dep_id = $data['department'];
             $employee->save();
+            $employee_stat = new employee_stat;
+            $employee_stat->user_id = $employee->user_id;
+            $employee_stat->save();
             return redirect('/all-employees')->with('success', 'Employee Has Been Added');
         }
         $user_id = User::orderBy('id', 'Desc')->first()->id;
         $designation = DB::table('designations')->get();
         $department  = DB::table('departments')->get();
         $etypes      = DB::table('employee_types')->get();
+
+
         return view('portal_pages.employees.add_employee_details', compact('etypes', 'designation', 'department', 'user_id'));
     }
 
     //edit get employee info
     public function editEmployee($id)
-    {
+    { if(auth()->user()->is_admin !=1){
+        return redirect()->back();
+    }
         $data = Employee::find($id);
         $user_id = User::orderBy('id', 'Desc')->first()->id;
         $designation = DB::table('designations')->get();
@@ -87,7 +104,9 @@ class EmployeeController extends Controller
 
     // update employee info
     public function updateEmployee(Request $request)
-    {
+    { if(auth()->user()->is_admin !=1){
+        return redirect()->back();
+    }
         $updateData = Employee::find($request->id);
         //dd($updateData);
 
@@ -136,7 +155,7 @@ class EmployeeController extends Controller
     //employee profile
     public function employee_profile($id)
     {
-        $getEmpProfDetails = Employee::with('designation', 'department', 'userinfo', 'empType')->where('user_id', $id)->first();
+        $getEmpProfDetails = Employee::where('user_id', $id)->first();
         $getEmpProfDetails = json_decode(json_encode($getEmpProfDetails));
         // echo "<pre>";
         // print_r($getEmpProfDetails);
@@ -152,4 +171,33 @@ class EmployeeController extends Controller
         //Employee::where('id', $id)->update(['status' => 0]);
         //return redirect('/all-employees')->with('success', 'Employee Activated Successfully');
     }
+
+    public function employee_stats(){
+
+     $employee_stat = Employee::join('employee_stats', 'employees.user_id', '=', 'employee_stats.user_id')
+    ->select('employees.fname','employees.lname', 'employee_stats.*')
+    ->get();
+
+        return view('portal_pages.employee_stat.index',compact('employee_stat'));
+    }
+    public function edit_emp_stat($id){
+        $employee_stat = Employee::join('employee_stats', 'employees.user_id', '=', 'employee_stats.user_id')
+        ->where('employee_stats.id',$id)
+        ->select('employees.fname','employees.lname', 'employee_stats.*')
+        ->first();
+        return view('portal_pages.employee_stat.edit',compact('employee_stat'));
+    }
+
+    public function update_emp_stat(Request $request){
+        $data = [
+            'role'=>$request->role,
+            'ranking'=>$request->ranking,
+            'salary'=>$request->salary,
+            'experience'=>$request->experience,
+            'year'=>Date('Y'),
+        ];
+        employee_stat::updateOrCreate(['id' => $request->id], $data);
+return redirect('employee_stats');
+    }
+
 } // end class
